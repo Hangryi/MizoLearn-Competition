@@ -1,31 +1,25 @@
-# MizoLearn — Education Chat App
+# MizoLearn
 
-MizoLearn is a mobile-first, offline-friendly learning prototype for young people. It includes 15 short lessons and quizzes across Basic Coding, AI Tools for Students, and Freelancing Basics.
+An offline-first learning app for young people. The project includes a browser/PWA version and an Android APK.
 
-## Open the app
+## Learning paths
 
-This is a static web app. To use its offline features, serve this folder over localhost or HTTPS (opening `index.html` directly does not enable the service worker).
+Basic Coding, AI Tools for Students, Freelancing Basics, Robotics Basics, Money Skills, Data Skills, Digital Marketing and Design Basics. Each path has five short lessons with a quick quiz. The tutor has a built-in answer bank for common questions and works without an internet connection.
 
-- In VS Code, open this folder and use the **Live Server** extension, then click **Go Live**.
-- Or, if Python is installed, open a terminal in this folder and run `python -m http.server 8000`, then visit `http://localhost:8000`.
+## Android APK
 
-After the first visit, the app shell and lesson content are cached for offline use. Progress and chat history are stored in IndexedDB on the device.
+The ready-to-install APK is `android-app/MizoLearn-Android.apk`. Flutter source is in `android-app/`. To rebuild it, install Flutter and run:
 
-## Publish as a separate GitHub project
+```sh
+cd android-app
+flutter pub get
+flutter build apk --release
+```
 
-This folder is the complete project. Create a new GitHub repository named `mizolearn-education-app`, then use GitHub Desktop:
+## Browser app
 
-1. Choose **File → Add Local Repository** and select this folder.
-2. If prompted, choose **create a repository here**.
-3. Commit the project files with a message such as `Add MizoLearn prototype`.
-4. Choose **Publish repository** and select the visibility required for your competition.
+The website files are at the repository root. GitHub Pages can publish them from the `main` branch and root folder. Lessons and progress are stored on the device for offline use after the first visit.
 
-For a live demo, enable **GitHub Pages** in the repository settings and publish from the `main` branch and `/ (root)` folder. The app uses relative paths, so it can run from a GitHub Pages project URL.
+## Online AI tutor
 
-## What is included
-
-- `index.html`, `styles.css`, `app.js`: app screens, styles and sample lessons.
-- `sw.js`: service worker for caching the static app shell.
-- `manifest.json` and `icons/`: installable PWA metadata and icons.
-
-The tutor's offline answer bank works without a server. Optional online services can be connected at `POST /api/chat` and `POST /api/sync`; no backend is included in this prototype.
+In the app, open Profile and enter an HTTPS server address ending in `/api/chat`. The server must accept `{ "message": "...", "style": "short-and-simple" }` and return `{ "answer": "..." }`. The app never stores an AI provider key; configure that key on the server. Without a configured server, the offline answer bank remains available.
